@@ -1,0 +1,31 @@
+version: 0.0.1
+type: plugin
+author: cazziwork
+name: datetime-tool
+label:
+  en_US: DateTime Tool
+  ja_JP: 日付操作ツール
+description:
+  en_US: Date and time manipulation tools with Japanese holiday support. Includes relative date calculation, month start/end, and holiday check.
+  ja_JP: 日本の祝日対応の日付・時刻操作ツール群。相対日付計算、月初月末、祝日判定を含む。
+icon: icon.png
+resource:
+  memory: 268435456
+  permission:
+    tool: {}
+plugins:
+  tools:
+    - provider/datetime_tool.yaml
+meta:
+  version: 0.0.1
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: "3.12"
+    entrypoint: main
+  minimum_dify_version: null
+created_at: 2026-02-19T00:00:00.000000+09:00
+privacy: PRIVACY.md
+verified: false

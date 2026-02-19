@@ -1,0 +1,73 @@
+identity:
+  name: "date_month_edge"
+  author: "cazziwork"
+  label:
+    en_US: "Get Month Start/End"
+    ja_JP: "月初・月末を取得"
+description:
+  human:
+    en_US: "Get the first or last day of a month."
+    ja_JP: "指定月の月初または月末を取得します。"
+  llm: "Get the first day (month start) or last day (month end) of a given month."
+parameters:
+  - name: "date"
+    type: string
+    required: false
+    label:
+      en_US: "Reference Date"
+      ja_JP: "基準日"
+    human_description:
+      en_US: "Reference date in YYYY-MM-DD format. Defaults to today if not specified."
+      ja_JP: "基準日（YYYY-MM-DD形式）。省略時は今日。"
+    llm_description: "Reference date in YYYY-MM-DD format. Leave empty to use today's date."
+    form: "llm"
+  - name: "edge"
+    type: string
+    required: true
+    label:
+      en_US: "Start or End"
+      ja_JP: "月初または月末"
+    human_description:
+      en_US: "Specify 'start' for the first day of the month or 'end' for the last day."
+      ja_JP: "'start' で月初（1日）、'end' で月末を取得。"
+    llm_description: "Use 'start' to get the first day of the month, or 'end' to get the last day."
+    form: "form"
+    options:
+      - value: "start"
+        label:
+          en_US: "Start (1st)"
+          ja_JP: "月初（1日）"
+      - value: "end"
+        label:
+          en_US: "End (last day)"
+          ja_JP: "月末"
+  - name: "timezone"
+    type: string
+    required: false
+    default: "Asia/Tokyo"
+    label:
+      en_US: "Timezone"
+      ja_JP: "タイムゾーン"
+    human_description:
+      en_US: "Timezone name. Default is Asia/Tokyo."
+      ja_JP: "タイムゾーン名。省略時は Asia/Tokyo。"
+    llm_description: "Timezone name such as Asia/Tokyo or UTC. Defaults to Asia/Tokyo."
+    form: "llm"
+output_schema:
+  type: object
+  properties:
+    result_date:
+      type: string
+      description: "Result date in YYYY-MM-DD format"
+    edge:
+      type: string
+      description: "Either 'start' or 'end'"
+    year:
+      type: number
+      description: "Year of the result"
+    month:
+      type: number
+      description: "Month of the result"
+extra:
+  python:
+    source: "tools/date_month_edge.py"

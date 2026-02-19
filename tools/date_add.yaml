@@ -1,0 +1,107 @@
+identity:
+  name: "date_add"
+  author: "cazziwork"
+  label:
+    en_US: "Add Duration to Date"
+    ja_JP: "日付に期間を加算"
+description:
+  human:
+    en_US: "Calculate a date by adding or subtracting days, weeks, months, or years. Supports business day mode that skips weekends and Japanese holidays."
+    ja_JP: "日付に日・週・月・年を加減算します。土日・祝日を除いた営業日モードに対応。"
+  llm: "Calculate a future or past date by adding/subtracting a duration from a base date. Supports business days mode (skips weekends and Japanese public holidays). Use negative amount for past dates."
+parameters:
+  - name: "date"
+    type: string
+    required: true
+    label:
+      en_US: "Base Date"
+      ja_JP: "基準日"
+    human_description:
+      en_US: "Base date in YYYY-MM-DD format (e.g. 2025-02-19)."
+      ja_JP: "基準日（YYYY-MM-DD形式、例: 2025-02-19）。"
+    llm_description: "Base date in YYYY-MM-DD format. Use today's date if the user says \"from today\"."
+    form: "llm"
+  - name: "amount"
+    type: number
+    required: true
+    label:
+      en_US: "Amount"
+      ja_JP: "加算量"
+    human_description:
+      en_US: "Number of units to add. Use negative values to subtract (e.g. -3 for 3 days ago)."
+      ja_JP: "加算する量。負の値で過去方向（例: -3 で3日前）。"
+    llm_description: "Integer number of units to add. Negative values go backward in time."
+    form: "llm"
+  - name: "unit"
+    type: string
+    required: true
+    label:
+      en_US: "Unit"
+      ja_JP: "単位"
+    human_description:
+      en_US: "Unit of duration: day, week, month, or year."
+      ja_JP: "期間の単位: day（日）、week（週）、month（月）、year（年）。"
+    llm_description: "Unit of the duration. Must be one of: day, week, month, year."
+    form: "form"
+    options:
+      - value: "day"
+        label:
+          en_US: "Day"
+          ja_JP: "日"
+      - value: "week"
+        label:
+          en_US: "Week"
+          ja_JP: "週"
+      - value: "month"
+        label:
+          en_US: "Month"
+          ja_JP: "月"
+      - value: "year"
+        label:
+          en_US: "Year"
+          ja_JP: "年"
+  - name: "business_days_only"
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: "Business Days Only"
+      ja_JP: "営業日のみ"
+    human_description:
+      en_US: 'If true, only count business days (skip weekends and Japanese public holidays). Only valid when unit is "day".'
+      ja_JP: 'trueの場合、土日・祝日を除いた営業日のみカウントします。unit が "day" の場合のみ有効。'
+    llm_description: 'Set to true to count only business days (excludes weekends and Japanese public holidays). Only applies when unit is "day".'
+    form: "llm"
+  - name: "timezone"
+    type: string
+    required: false
+    default: "Asia/Tokyo"
+    label:
+      en_US: "Timezone"
+      ja_JP: "タイムゾーン"
+    human_description:
+      en_US: "Timezone name. Default is Asia/Tokyo."
+      ja_JP: "タイムゾーン名。省略時は Asia/Tokyo。"
+    llm_description: "Timezone name such as Asia/Tokyo or UTC. Defaults to Asia/Tokyo."
+    form: "llm"
+output_schema:
+  type: object
+  properties:
+    result_date:
+      type: string
+      description: "Calculated date in YYYY-MM-DD format"
+    base_date:
+      type: string
+      description: "Input base date"
+    amount:
+      type: number
+      description: "Amount added"
+    unit:
+      type: string
+      description: "Unit used"
+    business_days_only:
+      type: boolean
+      description: "Whether business days mode was used"
+extra:
+  python:
+    source: "tools/date_add.py"

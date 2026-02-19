@@ -1,0 +1,59 @@
+identity:
+  name: "date_check_holiday_jp"
+  author: "cazziwork"
+  label:
+    en_US: "Check Japanese Holiday"
+    ja_JP: "祝日・営業日を判定"
+description:
+  human:
+    en_US: "Check if a date is a Japanese public holiday or business day. Uses the official Cabinet Office holiday data."
+    ja_JP: "指定日が日本の祝日・営業日かどうかを判定します。内閣府の祝日データを使用。"
+  llm: "Check whether a given date is a Japanese public holiday, weekend, or business day. Returns holiday name if applicable. Data sourced from the Japanese Cabinet Office."
+parameters:
+  - name: "date"
+    type: string
+    required: false
+    label:
+      en_US: "Date"
+      ja_JP: "判定する日付"
+    human_description:
+      en_US: "Date to check in YYYY-MM-DD format. Defaults to today if not specified."
+      ja_JP: "判定する日付（YYYY-MM-DD形式）。省略時は今日。"
+    llm_description: "Date to check in YYYY-MM-DD format. Leave empty to check today."
+    form: "llm"
+  - name: "timezone"
+    type: string
+    required: false
+    default: "Asia/Tokyo"
+    label:
+      en_US: "Timezone"
+      ja_JP: "タイムゾーン"
+    human_description:
+      en_US: "Timezone name. Default is Asia/Tokyo."
+      ja_JP: "タイムゾーン名。省略時は Asia/Tokyo。"
+    llm_description: "Timezone name such as Asia/Tokyo or UTC. Defaults to Asia/Tokyo."
+    form: "llm"
+output_schema:
+  type: object
+  properties:
+    date:
+      type: string
+      description: "The date checked in YYYY-MM-DD format"
+    is_holiday:
+      type: boolean
+      description: "True if the date is a Japanese public holiday"
+    holiday_name:
+      type: string
+      description: "Name of the holiday in Japanese (null if not a holiday)"
+    is_weekend:
+      type: boolean
+      description: "True if the date is Saturday or Sunday"
+    is_business_day:
+      type: boolean
+      description: "True if the date is a business day (not a weekend or holiday)"
+    day_of_week:
+      type: string
+      description: "Day of the week in Japanese (月曜日, 火曜日, ...)"
+extra:
+  python:
+    source: "tools/date_check_holiday_jp.py"

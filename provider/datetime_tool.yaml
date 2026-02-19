@@ -1,0 +1,19 @@
+identity:
+  author: cazziwork
+  name: datetime-tool
+  label:
+    en_US: DateTime Tool
+    ja_JP: 日付操作ツール
+  description:
+    en_US: Date and time manipulation tools with Japanese holiday support
+    ja_JP: 祝日対応の日付・時刻操作ツール群
+  icon: icon.png
+  tags:
+    - utilities
+tools:
+  - tools/date_add.yaml
+  - tools/date_month_edge.yaml
+  - tools/date_check_holiday_jp.yaml
+extra:
+  python:
+    source: provider/datetime_tool.py
